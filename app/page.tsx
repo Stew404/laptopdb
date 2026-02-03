@@ -5,6 +5,7 @@ import Sidebar from "./components/Sidebar";
 import Main from "./components/Main";
 import NavMenu from "./components/Nav";
 import News from "./components/News";
+import Header from "./components/Header";
 
 export default async function Home({}) {
     // const vendorsWithModels = await getVendorsWithModels()
@@ -13,8 +14,8 @@ export default async function Home({}) {
     // const laptop = await getLaptopByID(query.laptop);
     return (
         <>
-        {/* <NavMenu /> */}
-        <News />
+            {/* <NavMenu /> */}
+            <News />
             {/* TODO: Put that somewhere on another page */}
             {/* <Sidebar
                 vendorsWithModels={vendorsWithModels}

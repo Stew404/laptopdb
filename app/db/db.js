@@ -1,7 +1,11 @@
 import postgres from 'postgres'
 
+
 const sql = postgres({
-    transform: postgres.camel,
+    transform: {
+        ...postgres.camel,
+        undefined: null,
+    },
     
     host: process.env.DB_HOST,
     port: 5432,

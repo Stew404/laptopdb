@@ -4,7 +4,7 @@ export default function NavMenu(){
     return (
         // main-border block-bg main-shadow
         <nav className="w-6/10 h-full p-[.3rem] pb-[.3rem] flex items-center mx-[3rem] rounded-full">
-            <a className={`${BUTTON_STYLES} rounded-tr-[0]`} href="">
+            <a className={`${BUTTON_STYLES} rounded-tr-[0]`} href="/pc">
                 <h2>PC</h2>
             </a>
             <a className={`${BUTTON_STYLES} rounded-t-[0]`} href="">

@@ -1,5 +1,5 @@
 'use client'
-export default function Main({ laptopData }) {
+export default function Main({ laptopData } : { laptopData: Record<string,string>}) {
     console.log(laptopData);
     return (
         <main className="h-full flex items-center">

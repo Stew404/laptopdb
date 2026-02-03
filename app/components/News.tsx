@@ -24,9 +24,9 @@ const NEWS_BLOCKS = [
 export default function News (){
 
     const BLOCK_STYLES = [
-        "w-5/20 pb-[.7rem] main-border block-bg main-shadow rounded-[50px] rounded-bl-[10px]",
-        "w-5/10 mx-[.8rem]",
-        "w-5/20 pb-[.7rem] main-border block-bg main-shadow rounded-[50px] rounded-br-[10px]",
+        "w-5/20 p-[1rem] flex flex-col items-center justify-between main-border block-bg main-shadow rounded-[50px] rounded-bl-[10px]",
+        "w-5/10 flex flex-col items-center justify-between mx-[.8rem]",
+        "w-5/20 p-[1rem] flex flex-col items-center justify-between main-border block-bg main-shadow rounded-[50px] rounded-br-[10px]",
     ];
 
     return(
@@ -40,17 +40,27 @@ export default function News (){
                         {block.map((article, index) => {
                             return (
                                 <div
-                                    className={`p-[.4rem] mb-[.8rem] last:mb-0 ${
+                                    className={`last:mb-0 mb-[1rem] rounded-[50px] overflow-hidden  ${
                                         blockIndex == 1
-                                            ? "h-[44%] main-border block-bg main-shadow rounded-[50px]"
-                                            : "h-1/2"
+                                            ? "h-[44%] p-[.6rem] block-bg main-shadow main-border overflow-visible"
+                                            : "h-1/2 main-shadow main-border"
+                                    }
+
+                                    ${
+                                        blockIndex == 0
+                                            ? "last:rounded-bl-[10px]"
+                                            : blockIndex == 2
+                                            ? "last:rounded-br-[10px]"
+                                            : ""
                                     }`}
                                     key={`article-${blockIndex}-${index}`}
                                 >
                                     <a
-                                        className={`h-full text-center flex flex-col items-center mb-[1rem] last:mb-[0rem] button rounded-[50px] ${
-                                            blockIndex == 0 ? "rounded-bl-[10px]" : 
-                                            blockIndex == 2 ? "rounded-br-[10px]" : ""
+                                        className={`h-full text-center flex flex-col items-center mb-[1rem] last:mb-[0rem] button 
+                                        ${
+                                            blockIndex == 1
+                                                ? "rounded-[50px]"
+                                                : ""
                                         }`}
                                         href=""
                                     >
@@ -61,13 +71,15 @@ export default function News (){
                                                 alt="news-img"
                                             />
                                         </div>
-                                        <p className="h-1/2 px-[.5rem] pt-[1rem]">{article}</p>
+                                        <p className="h-1/2 px-[.5rem] pt-[1rem]">
+                                            {article}
+                                        </p>
                                     </a>
                                 </div>
                             );
                         })}
                         {blockIndex == 1 && (
-                            <div className="h-[7rem] p-[.6rem] main-border main-shadow block-bg rounded-t-[50px]">
+                            <div className="w-full h-[7rem] p-[.6rem] main-border main-shadow block-bg rounded-t-[50px]">
                                 <button className="w-full h-full button rounded-t-[50px]">
                                     <p>⇊ ⇊ Все новости ⇊ ⇊</p>
                                 </button>

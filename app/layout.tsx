@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
       <html className="w-full" lang="en">
           <body className={`${lato.className} w-full max-w-[1300px] m-auto mb-[7rem] h-full flex flex-col`}>
-            <Header />
+          <Header/>
             {children}
           </body>
       </html>
