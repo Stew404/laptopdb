@@ -1,10 +1,11 @@
 import sql from "./db"
+import { GenericSingleRow, Laptop } from "@/app/types"
 
 const ELEMS_PER_PAGE = 10
 
 export async function getLaptops(searchQuery = "%", page = 1){
 
-    const laptops = await sql`
+    const laptops = await sql<Laptop[]>`
         select * from laptops
         where lower(concat(brand, line, model)) like lower(${`%${searchQuery}%`})
         order by date_edited desc
@@ -13,12 +14,12 @@ export async function getLaptops(searchQuery = "%", page = 1){
     return laptops
 }
 
-export async function getLaptopByID(id){
+export async function getLaptopByID(id: number){
     if(!id){
         return null
     }
 
-    const laptop = await sql`
+    const laptop = await sql<Laptop[]>`
     select * from laptops where id = ${id}
     `
 
@@ -26,7 +27,7 @@ export async function getLaptopByID(id){
 }
 
 export async function getLaptopsCount(searchQuery = "%"){
-    const count = await sql`
+    const count = await sql<GenericSingleRow<number, "count">[]>`
         select count(*) from laptops
         where lower(concat(brand, line, model)) like lower(${`%${searchQuery}%`})
     `

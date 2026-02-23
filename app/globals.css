@@ -18,6 +18,13 @@
   
   --button-background-color: #64b8e0;
   --button-hover-color: #e677ff;
+
+  --header-height: 10rem;
+  --main-height: calc(100vh - (var(--header-height) + 2rem));
+
+  --sidebar-elem-bg-color: #0e1321;
+  --sidebar-elem-text-color: #FFFFFF;
+  --sidebar-elem-selected-color: #ff9701;
 }
 
 html {

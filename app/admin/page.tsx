@@ -1,12 +1,12 @@
 import { SearchParams } from "next/dist/server/request/search-params";
-import ElementList from "../components/admin/ElementList";
-import LaptopForm from "../components/admin/LaptopForm";
-import StatusMessage from "../components/admin/StatusMessage";
+import ElementList from "./components/ElementList";
+import LaptopForm from "./components/LaptopForm";
+import StatusMessage from "./components/StatusMessage";
 import add from "../actions/add";
 import update from "../actions/update";
 import { getLaptopByID, getLaptopsCount } from "../db/laptops";
-import AdminSearchInput from "../components/admin/AdminSearchInput";
-import Pagination from "../components/admin/Pagination";
+import AdminSearchInput from "./components/AdminSearchInput";
+import Pagination from "./components/Pagination";
 import { verifySession } from "../lib/dal";
 import { redirect } from "next/navigation";
 
@@ -26,7 +26,11 @@ export default async function AdminPanel({
     const query = params.q;
     const page = parseInt(params.page as string);
 
-    const laptopData = await getLaptopByID(params.id);
+    if(params.id !== "string"){
+        return new Error("Invalid id") 
+    }
+
+    const laptopData = await getLaptopByID(parseInt(params.id));
     const laptopsCount = await getLaptopsCount(query as string);
 
     switch (action) {

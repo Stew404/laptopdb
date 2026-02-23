@@ -5,8 +5,9 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import imageIcon from "@/public/add-image.svg"
 import { ChangeEvent, useState } from "react";
+import { Laptop } from "@/app/types";
 
-export default function LaptopForm({action, data = null}: {action: (formdata: FormData) => Promise<{message: string}>, data?: Record<string, string> | null}){
+export default function LaptopForm({action, data = null}: {action: (formdata: FormData) => Promise<{message: string}>, data?: Laptop | null}){
     
     const fieldsetDivStyle =
         "grid grid-cols-[repeat(auto-fit,_minmax(220px,_1fr))] gap-[1.5rem]";
@@ -93,7 +94,9 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
                             <input
                                 type="text"
                                 name="generation"
-                                defaultValue={data?.generation}
+                                defaultValue={
+                                    data?.generation ? data?.generation : ""
+                                }
                             />
                         </div>
                     </div>
@@ -150,7 +153,7 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
                             <input
                                 type="text"
                                 name="gpu"
-                                defaultValue={data?.gpu}
+                                defaultValue={data?.gpu ? data?.gpu : ""}
                                 required
                             />
                         </div>
@@ -159,7 +162,7 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
                             <input
                                 type="text"
                                 name="igpu"
-                                defaultValue={data?.igpu}
+                                defaultValue={data?.igpu ? data?.igpu : ""}
                             />
                         </div>
                         <div>
@@ -209,7 +212,9 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
                             <input
                                 type="text"
                                 name="matrix_type"
-                                defaultValue={data?.matrixType}
+                                defaultValue={
+                                    data?.matrixType ? data?.matrixType : ""
+                                }
                             />
                         </div>
                         <div>
@@ -217,7 +222,9 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
                             <input
                                 type="number"
                                 name="brightness"
-                                defaultValue={data?.brightness}
+                                defaultValue={
+                                    data?.brightness ? data?.brightness : ""
+                                }
                             />
                         </div>
                         <div>
@@ -225,14 +232,18 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
                             <input
                                 type="text"
                                 name="matrix_cover"
-                                defaultValue={data?.matrixCover}
+                                defaultValue={
+                                    data?.matrixCover ? data?.matrixCover : ""
+                                }
                             />
                         </div>
                         <div>
                             <label>Сенсорный экран *</label>
                             <select
                                 name="is_touchscreen"
-                                defaultValue={data?.isTouchscreen}
+                                defaultValue={
+                                    String(data?.isTouchscreen)
+                                }
                                 required
                             >
                                 <option value="false">Нет</option>
@@ -245,7 +256,7 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
                                 type="number"
                                 step="0.1"
                                 name="display_angle"
-                                defaultValue={data?.displayAngle}
+                                defaultValue={data?.displayAngle ?? ""}
                             />
                         </div>
                     </div>
@@ -259,7 +270,7 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
                             <input
                                 type="text"
                                 name="keyboard"
-                                defaultValue={data?.keyboard}
+                                defaultValue={data?.keyboard ?? ""}
                             />
                         </div>
                         <div>
@@ -267,7 +278,7 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
                             <input
                                 type="text"
                                 name="trackpad"
-                                defaultValue={data?.trackpad}
+                                defaultValue={data?.trackpad ?? ""}
                             />
                         </div>
                         <div>
@@ -275,7 +286,7 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
                             <input
                                 type="text"
                                 name="webcam"
-                                defaultValue={data?.webcam}
+                                defaultValue={data?.webcam ?? ""}
                             />
                         </div>
                         <div>
@@ -283,7 +294,7 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
                             <input
                                 type="text"
                                 name="sound"
-                                defaultValue={data?.sound}
+                                defaultValue={data?.sound ?? ""}
                             />
                         </div>
                     </div>
@@ -296,14 +307,14 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
                             <label>Порты</label>
                             <textarea
                                 name="ports"
-                                defaultValue={data?.ports}
+                                defaultValue={data?.ports ?? ""}
                             ></textarea>
                         </div>
                         <div>
                             <label>Беспроводные соединения</label>
                             <textarea
                                 name="connection"
-                                defaultValue={data?.connection}
+                                defaultValue={data?.connection ?? ""}
                             ></textarea>
                         </div>
                     </div>
@@ -317,7 +328,7 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
                             <input
                                 type="text"
                                 name="size"
-                                defaultValue={data?.size}
+                                defaultValue={data?.size ?? ""}
                             />
                         </div>
                         <div>
@@ -326,7 +337,7 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
                                 type="number"
                                 step="0.01"
                                 name="weight"
-                                defaultValue={data?.weight}
+                                defaultValue={data?.weight ?? ""}
                             />
                         </div>
                         <div>
@@ -334,14 +345,14 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
                             <input
                                 type="text"
                                 name="material"
-                                defaultValue={data?.material}
+                                defaultValue={data?.material ?? ""}
                             />
                         </div>
                         <div>
                             <label>Заменяемые компоненты</label>
                             <textarea
                                 name="replaceable_components"
-                                defaultValue={data?.replaceableComponents}
+                                defaultValue={data?.replaceableComponents ?? ""}
                             ></textarea>
                         </div>
                     </div>
