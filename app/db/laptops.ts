@@ -7,7 +7,7 @@ export async function getLaptops(searchQuery = "%", page = 1){
 
     const laptops = await sql<Laptop[]>`
         select * from laptops
-        where lower(concat(brand, line, model)) like lower(${`%${searchQuery}%`})
+        where lower(concat(brand, line, generation, model)) like lower(${`%${searchQuery}%`})
         order by date_edited desc
         limit ${ELEMS_PER_PAGE} offset ${ELEMS_PER_PAGE * (page - 1)}
     `
@@ -24,6 +24,19 @@ export async function getLaptopByID(id: number){
     `
 
     return laptop[0]
+}
+
+export async function getLaptopsByFullName(vendor:string, line:string, generation:string = "") {
+    const generationOption = (generation:string) => sql`and generation = ${generation}`;
+
+    const laptops = await sql<Laptop[]>`
+    select * from laptops 
+    where brand = ${vendor} 
+    and line = ${line} 
+    ${generation ? generationOption(generation) : sql``}
+    `;
+    console.log(laptops)
+    return laptops
 }
 
 export async function getLaptopsCount(searchQuery = "%"){

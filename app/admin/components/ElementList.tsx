@@ -18,7 +18,7 @@ export default async function ElementList({type, searchQuery = "", page}: {type:
         <div className="mb-[2rem]">
             {elements.length > 0 &&
                 elements.map((element) => {
-                    const name = `${element.brand} ${element.line} ${element.model}`;
+                    const name = `${element.brand} ${element.line} ${element.generation ?? ""} ${element.model}`;
                     const removeElem = async () => {
                         "use server";
                         const message = await remove(element.id);

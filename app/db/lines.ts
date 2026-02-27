@@ -19,7 +19,7 @@ export async function getLinesWithGenerations() {
     SELECT 
     line, 
     COALESCE(
-        array_agg(generation) FILTER (WHERE generation IS NOT NULL),
+        array_agg(distinct generation) FILTER (WHERE generation IS NOT NULL),
         '{}'
     ) AS generations
     FROM laptops

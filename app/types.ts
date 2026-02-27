@@ -1,4 +1,4 @@
-export interface Laptop {
+export interface Laptop{
     id: number;
 
     brand: string;
@@ -7,7 +7,7 @@ export interface Laptop {
 
     cpu: string;
     gpu: string | null;
-    igpu: string | null;
+    igpu: string  | null;
     generation: string | null;
 
     ram: number;
@@ -46,13 +46,13 @@ export interface Laptop {
     dateEdited: Date;
 }
 
-export type VendorColumn = Pick<Laptop, "brand">
-export type LineColumn = Pick<Laptop, "line">
+export type VendorColumn = Pick<Laptop, "brand">;
+export type LineColumn = Pick<Laptop, "line">;
 
 export type VendorWithLines = {
-    brand: Laptop["brand"],
-    lines: Laptop["line"][]
-}
+    brand: Laptop["brand"];
+    lines: Laptop["line"][];
+};
 
 export type LineWithModels = {
     line: Laptop["line"];
@@ -62,7 +62,7 @@ export type LineWithModels = {
 export type LineWithGenerations = {
     line: Laptop["line"];
     generations: Laptop["generation"][];
-}
+};
 
 export type GenericSingleRow<T, K extends string> = {
     [key in K]: T;

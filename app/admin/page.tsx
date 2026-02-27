@@ -26,11 +26,12 @@ export default async function AdminPanel({
     const query = params.q;
     const page = parseInt(params.page as string);
 
-    if(params.id !== "string"){
-        return new Error("Invalid id") 
+    let laptopData;
+
+    if(params.id && typeof params.id === "string"){
+        laptopData = await getLaptopByID(parseInt(params.id));
     }
 
-    const laptopData = await getLaptopByID(parseInt(params.id));
     const laptopsCount = await getLaptopsCount(query as string);
 
     switch (action) {

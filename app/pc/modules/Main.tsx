@@ -1,12 +1,13 @@
-'use client'
-
 import { Laptop } from "../../types";
+import ComponentForm from "../components/ComponentForm/ComponentForm";
 
-export default function Main({ laptopData } : { laptopData: Laptop}) {
-    console.log(laptopData);
+export default function Main({ laptops } : { laptops: Laptop[]}) {
+
     return (
         <main className="h-full flex items-center">
-            <div className="text-[24px]">
+            <ComponentForm laptops={laptops}/>
+
+            {/* <div className="text-[24px]">
                 <p><b>Производитель: </b> {laptopData.brand}</p>
                 <p><b>Модель: </b> {laptopData.model}</p>
                 <p><b>Размер дисплея: </b> {laptopData.resolution}</p>
@@ -15,7 +16,7 @@ export default function Main({ laptopData } : { laptopData: Laptop}) {
                 <p><b>Внутренняя память: </b> {laptopData.memory}</p>
                 <p><b>Графическое ядро: </b> {laptopData.gpu}</p>
                 <p><b>Вес: </b> {laptopData.weight}</p>
-            </div>
+            </div> */}
         </main>
     );
 }

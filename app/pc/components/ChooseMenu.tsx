@@ -45,7 +45,7 @@ const transitionStyles: Record<TransitionStatus, any> = {
 
 
 const blockStyle =
-    "h-full w-[20rem] flex flex-col items-center justify-start py-[1em] overflow-y-auto";
+    "w-full h-full w-[20rem] flex flex-col items-center justify-start py-[1em] overflow-y-auto";
 
 const buttonStyle = `
         flex items-center justify-center
@@ -100,7 +100,7 @@ export function ChooseMenu({
     };
 
     return (
-        <div>
+        <div className="relative w-2/3">
             <div
                 className={
                     blockStyle +
@@ -172,7 +172,7 @@ export function ChooseMenu({
                                                         : ""
                                                 }`
                                                 }
-                                                href={`?line=${line}`}
+                                                href={`?vendor=${currentVendor}&line=${line}`}
                                                 onClick={() => {
                                                     lineClickHandler(line);
                                                 }}
@@ -229,12 +229,12 @@ export function ChooseMenu({
                     >
                         {currentLine &&
                             linesWithGenerations[currentLine].map(
-                                (generation) => {
+                                (generation, index) => {
                                     return (
                                         <Link
-                                            href={`?generation=${generation}`}
+                                            href={`?vendor=${currentVendor}&line=${currentLine}&generation=${generation}`}
                                             className={buttonStyle}
-                                            key={`${generation}-${Date.now()}`}
+                                            key={`${generation}-${index}`}
                                         >
                                             {generation}
                                         </Link>
