@@ -1,11 +1,11 @@
 'use client'
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {Transition, TransitionStatus} from "react-transition-group";
 import Link from "next/link";
 import { Laptop } from "../../types";
 
-const TRANSTITON_DURATION = 100;
+const TRANSTITON_DURATION = 50;
 
 const defaultStyle = {
     transition: `opacity ${TRANSTITON_DURATION}ms ease, transform ${TRANSTITON_DURATION}ms ease-out`,
@@ -45,7 +45,7 @@ const transitionStyles: Record<TransitionStatus, any> = {
 
 
 const blockStyle =
-    "w-full h-full w-[20rem] flex flex-col items-center justify-start py-[1em] overflow-y-auto";
+    "w-3/5 h-full flex flex-col items-center justify-start py-[1em] overflow-y-auto";
 
 const buttonStyle = `
         flex items-center justify-center
@@ -53,7 +53,7 @@ const buttonStyle = `
         text-[1.4rem] text-center text-(--sidebar-elem-text-color) 
         px-[1em]
         mb-[.2rem]
-        bg-(--sidebar-elem-bg-color) hover:bg-gray-700 
+        bg-(--sidebar-elem-bg-color) hover:bg-neutral-400 
         rounded-[8px]
         cursor-pointer
         font-normal
@@ -62,20 +62,53 @@ const buttonStyle = `
 export function ChooseMenu({
     brandsWithLines,
     linesWithGenerations,
+    selectedState,
 }: {
     brandsWithLines: Record<Laptop["brand"], Laptop["line"][]>;
     linesWithGenerations: Record<Laptop["line"], Laptop["generation"][]>;
+    selectedState: {
+        vendor: Laptop["brand"];
+        line: Laptop["line"];
+        generation?: NonNullable<Laptop["generation"]>;
+    };
 }) {
     const vendors = Object.keys(brandsWithLines);
 
-    const [currentVendor, setCurrentVendor] = useState<Laptop["brand"] | null>(null);
+    const [currentVendor, setCurrentVendor] = useState<Laptop["brand"] | null>(
+        null
+    );
     const [currentLine, setCurrentLine] = useState<Laptop["line"] | null>(null);
+    const [currentGeneration, setCurrentGeneration] = useState<Laptop["generation"] | null>(null);
 
     const lineRef = useRef<HTMLDivElement | null>(null);
     const modelRef = useRef<HTMLDivElement | null>(null);
 
     const [isLineOpen, setIsLineOpen] = useState(false);
     const [isModelOpen, setIsModelOpen] = useState(false);
+
+    useEffect(()=>{
+        console.log("render change")
+        if(selectedState.vendor){
+            setCurrentVendor(selectedState.vendor)
+            setCurrentLine(selectedState.line)
+
+            setIsLineOpen(true)
+            setIsModelOpen(true)
+        } else {
+            setCurrentVendor(null);
+            setCurrentLine(null);
+            setCurrentGeneration(null);
+
+            setIsLineOpen(false);
+            setIsModelOpen(false);
+        }
+
+        if(selectedState.generation){
+            setCurrentGeneration(selectedState.generation)
+        }
+    }, [selectedState])
+
+    useEffect(()=>{console.log("render menu")})
 
     const vendorClickHandler = (vendor: Laptop["brand"]) => {
         setIsLineOpen((state) => !state);
@@ -86,6 +119,7 @@ export function ChooseMenu({
             setCurrentVendor(null);
         }
         setCurrentLine(null);
+        setCurrentGeneration(null);
         setIsModelOpen(false);
     };
 
@@ -97,10 +131,14 @@ export function ChooseMenu({
         } else {
             setCurrentLine(null);
         }
+        setCurrentGeneration(null);
+    };
+    const generationClickHandler = (generation: Laptop["generation"]) => {
+        setCurrentGeneration(() => generation)
     };
 
     return (
-        <div className="relative w-2/3">
+        <div className="relative w-full">
             <div
                 className={
                     blockStyle +
@@ -126,7 +164,9 @@ export function ChooseMenu({
                                 }
                                 `
                             }
-                            onClick={()=>{vendorClickHandler(vendor)}}
+                            onClick={() => {
+                                vendorClickHandler(vendor);
+                            }}
                             key={`${vendor}-${Date.now()}`}
                         >
                             {vendor}
@@ -155,17 +195,14 @@ export function ChooseMenu({
                         >
                             {currentVendor &&
                                 brandsWithLines[currentVendor].map((line) => {
-                                    if(linesWithGenerations[line].length === 0){
+                                    if (
+                                        linesWithGenerations[line].length === 0
+                                    ) {
                                         return (
                                             <Link
                                                 className={
                                                     buttonStyle +
-                                                    ` ${
-                                                        isModelOpen
-                                                            ? "justify-start"
-                                                            : ""
-                                                    }
-
+                                                    ` 
                                                 ${
                                                     line === currentLine
                                                         ? "bg-(--sidebar-elem-selected-color)"
@@ -174,15 +211,14 @@ export function ChooseMenu({
                                                 }
                                                 href={`?vendor=${currentVendor}&line=${line}`}
                                                 onClick={() => {
-                                                    lineClickHandler(line);
+                                                    setCurrentLine(line)
                                                 }}
                                                 key={`${line}-${Date.now()}`}
                                             >
                                                 {line}
                                             </Link>
                                         );
-                                    } 
-
+                                    }
 
                                     return (
                                         <button
@@ -201,7 +237,9 @@ export function ChooseMenu({
                                                 }`
                                             }
                                             key={`${line}-${Date.now()}`}
-                                            onClick={()=>{lineClickHandler(line)}}
+                                            onClick={() => {
+                                                lineClickHandler(line);
+                                            }}
                                         >
                                             {line}
                                         </button>
@@ -233,8 +271,21 @@ export function ChooseMenu({
                                     return (
                                         <Link
                                             href={`?vendor=${currentVendor}&line=${currentLine}&generation=${generation}`}
-                                            className={buttonStyle}
+                                            className={
+                                                buttonStyle +
+                                                `
+                                                ${
+                                                    generation === currentGeneration
+                                                        ? "bg-(--sidebar-elem-selected-color)"
+                                                        : ""
+                                                }`
+                                            }
                                             key={`${generation}-${index}`}
+                                            onClick={() => {
+                                                generationClickHandler(
+                                                    generation
+                                                );
+                                            }}
                                         >
                                             {generation}
                                         </Link>

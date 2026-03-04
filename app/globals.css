@@ -4,10 +4,13 @@
   --background: #accbd9;
   --section-background: #accbd9;
   --block-background: #cfe1e9;
+  --block-background-alt: #64b8e0;
   --input-background: #e1f0f6;
 
   --text-color: #242323;
   --border-color: #64b8e0;
+
+  --shadow-padding: 3px 5px 5px 3px;
   
   --section-border-color: #3c647d;
   --section-border: var(--section-border-color) 3px solid;
@@ -25,6 +28,9 @@
   --sidebar-elem-bg-color: #0e1321;
   --sidebar-elem-text-color: #FFFFFF;
   --sidebar-elem-selected-color: #ff9701;
+  --sidebar-elem-width: 20rem;
+  --sidebar-elem-gap: 4rem;
+  --sidebar-width: calc(var(--sidebar-elem-width) + (var(--sidebar-elem-gap) * 2)) 
 }
 
 html {
@@ -69,7 +75,12 @@ body::-webkit-scrollbar-thumb {
     font-weight: 600;
   }
 
-  p, a {
+  h3 {
+    font-size: 2.2rem;
+    font-weight: 600;
+  }
+
+  p, a, li {
     font-size: 1.6rem;
     font-weight: 600;
     color: var(--text-color);
@@ -134,8 +145,16 @@ body::-webkit-scrollbar-thumb {
     background-color: var(--block-background);
   }
 
+  .block-bg-alt {
+    background-color: var(--block-background-alt);
+  }
+
   .section-bg {
     background-color: var(--section-background);
+  }
+
+  .shadow-padding {
+    padding: var(--shadow-padding)
   }
 
   .button, .header-button {

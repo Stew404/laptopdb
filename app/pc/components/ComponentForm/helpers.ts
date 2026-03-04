@@ -68,6 +68,15 @@ const filters = {
     resolution: isConsistsToResolution
 }
 
+export const getFormStateFromLaptop = (laptop: Laptop)=>{
+    let state: Partial<reducerState> = {}
+
+    for (const key in getters) {
+        state[key as keyof reducerState] = getters[key as keyof reducerState](laptop);
+    }
+    return state as reducerState
+}
+
 export const filterLaptops = (formState: reducerState, laptops: Laptop[]) => {
     return laptops.filter((laptop) => {
         for (const key in formState) {

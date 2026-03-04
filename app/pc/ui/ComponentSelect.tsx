@@ -1,4 +1,4 @@
-import { FC, SelectHTMLAttributes } from "react"
+import { Component, FC, SelectHTMLAttributes, useRef } from "react"
 
 interface ComponentSelectProps {
     name: string;
@@ -10,14 +10,19 @@ interface ComponentSelectProps {
 }
 
 const ComponentSelect : FC<ComponentSelectProps> =  ({name, id, labelOption, selectedOption, options, onChange}) => {
+    const ref = useRef<HTMLSelectElement>(null)
     return (
-        <select className="button h-[5rem] rounded-[50px]" name={name} id={id} onChange={onChange} defaultValue={selectedOption}>
+        <select
+            ref={ref}
+            className="button h-[5rem] rounded-[50px]  text-center text-[1.8rem]"
+            name={name}
+            id={id}
+            onChange={onChange}
+            value={selectedOption}
+        >
             <option value="">{labelOption}</option>
-            {options.map((option, index) => (
-                <option
-                    key={option}
-                    value={option}
-                >
+            {options.map((option) => (
+                <option key={option} value={option}>
                     {option}
                 </option>
             ))}

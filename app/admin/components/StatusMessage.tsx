@@ -1,6 +1,6 @@
 'use client'
 
-import useMessage from "@/app/hooks/useMessage";
+import {useMessage} from "@/app/hooks/useMessage";
 
 
 export default function StatusMessage(){

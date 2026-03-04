@@ -1,6 +1,6 @@
 "use client"
 
-import useMessage from "@/app/hooks/useMessage";
+import {useMessage} from "@/app/hooks/useMessage";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import imageIcon from "@/public/add-image.svg"
@@ -241,9 +241,7 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
                             <label>Сенсорный экран *</label>
                             <select
                                 name="is_touchscreen"
-                                defaultValue={
-                                    String(data?.isTouchscreen)
-                                }
+                                defaultValue={String(data?.isTouchscreen)}
                                 required
                             >
                                 <option value="false">Нет</option>
@@ -304,14 +302,24 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
                     <legend>Порты и соединения</legend>
                     <div className={fieldsetDivStyle}>
                         <div>
-                            <label>Порты</label>
+                            <label>
+                                Порты{" "}
+                                <span className="text-[1.2rem] opacity-[.5]">
+                                    (через запятую)
+                                </span>
+                            </label>
                             <textarea
                                 name="ports"
                                 defaultValue={data?.ports ?? ""}
                             ></textarea>
                         </div>
                         <div>
-                            <label>Беспроводные соединения</label>
+                            <label>
+                                Беспроводные соединения{" "}
+                                <span className="text-[1.2rem] opacity-[.5]">
+                                    (через запятую)
+                                </span>
+                            </label>
                             <textarea
                                 name="connection"
                                 defaultValue={data?.connection ?? ""}
@@ -349,7 +357,12 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
                             />
                         </div>
                         <div>
-                            <label>Заменяемые компоненты</label>
+                            <label>
+                                Заменяемые компоненты{" "}
+                                <span className="text-[1.2rem] opacity-[.5]">
+                                    (через запятую)
+                                </span>
+                            </label>
                             <textarea
                                 name="replaceable_components"
                                 defaultValue={data?.replaceableComponents ?? ""}

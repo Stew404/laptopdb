@@ -5,11 +5,17 @@ export interface reducerState {
     resolution: string
 }
 
-export interface reducerUpdateFieldAction {
+interface reducerUpdateFieldAction {
     type: "update_field";
     name: string;
     value: string;
 }
+interface reducerUpdateStateAction {
+    type: "update_state";
+    state: reducerState
+}
+
+export type reducerActions = reducerUpdateFieldAction | reducerUpdateStateAction;
 
 export interface ArraysReducerState {
     cpu: string[];
@@ -18,7 +24,7 @@ export interface ArraysReducerState {
     resolution: string[]
 }
 
-export interface reducerUpdateStateAction {
+export interface ArraysReducerUpdateStateAction {
     type: "update_state",
     state: ArraysReducerState
 }

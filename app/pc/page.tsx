@@ -25,8 +25,8 @@ export default async function PC({searchParams}: {searchParams: Promise<SearchPa
     }
 
     return (
-        <div className="flex h-screen max-h-(--main-height) section-bg main-shadow section-border rounded-t-[50px] rounded-b-[10px]">
-            <Sidebar/>
+        <div className="flex h-screen max-h-(--main-height) p-[3px] pb-[5px] pr-[5px] section-bg main-shadow section-border rounded-t-[50px] rounded-b-[10px]">
+            <Sidebar params={params}/>
             {laptops.length > 0 && <Main laptops={laptops}/>}
         </div>
     );

@@ -38,7 +38,7 @@ export interface Laptop{
     material: string | null;
     replaceableComponents: string | null;
 
-    laptopImage: string | null;
+    laptopImage: string;
 
     releaseYear: number;
 

@@ -1,6 +1,6 @@
 'use client'
 
-import useMessage from "@/app/hooks/useMessage";
+import { useMessage } from "@/app/hooks/useMessage";
 import { useRouter } from "next/navigation";
 
 export default function Element({
