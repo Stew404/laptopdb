@@ -78,22 +78,27 @@ export const getFormStateFromLaptop = (laptop: Laptop)=>{
 }
 
 export const filterLaptops = (formState: reducerState, laptops: Laptop[]) => {
-    return laptops.filter((laptop) => {
+    let excludedLaptops: Laptop[] = [];
+    let filteredLaptops = laptops.filter((laptop) => {
         for (const key in formState) {
             let filter = filters[key as keyof reducerState];
 
             if (!filter(laptop, formState[key as keyof reducerState])) {
+                excludedLaptops.push(laptop);
                 return false;
             }
         }
 
         return true;
     });
+
+    return [filteredLaptops, excludedLaptops];
 };
 
 export const buildArrays = (
     formState: reducerState,
-    filteredLaptops: Laptop[]
+    filteredLaptops: Laptop[],
+    excludedLaptops: Laptop[]
 ) => {
     let arrays: ArraysReducerState = {
         cpu: [],
@@ -105,7 +110,13 @@ export const buildArrays = (
     const fields = Object.keys(formState) as (keyof reducerState)[];
 
     fields.forEach((key)=>{
-        arrays[key] = createArr(key, filteredLaptops)
+        arrays[key] = [
+            ...new Set([
+                ...createArr(key, filteredLaptops),
+                "_",
+                ...createArr(key, excludedLaptops),
+            ]),
+        ];
     });
 
     return arrays;

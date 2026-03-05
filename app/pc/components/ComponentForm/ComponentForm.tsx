@@ -57,9 +57,7 @@ export default function ComponentForm({laptops} : {laptops: Laptop[]}){
     const {laptop, setLaptop, clearLaptop} = useLaptop()
 
     useEffect(()=>{
-        let filteredLaptops = filterLaptops(formState, laptops);
-        //TODO: transfer these filtered laptops to main component if last one laptop
-        console.log(formState) 
+        let [filteredLaptops, excludedLaptops] = filterLaptops(formState, laptops);
         if(filteredLaptops.length === 1){
             setLaptop(filteredLaptops[0]);
             
@@ -69,7 +67,7 @@ export default function ComponentForm({laptops} : {laptops: Laptop[]}){
 
         arraysDispatch({
             type: "update_state",
-            state: buildArrays(formState, filteredLaptops),
+            state: buildArrays(formState, filteredLaptops, excludedLaptops)
         });
 
 

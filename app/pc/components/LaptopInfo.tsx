@@ -1,32 +1,10 @@
 import { Laptop } from "@/app/types";
 import Image from "next/image";
-import { Component } from "react";
 
 export default function LaptopInfo({laptop}: {laptop: Laptop}){
 
     return (
         <div className="flex gap-[3rem] w-full h-full py-[2rem] px-[1rem] text-[24px]">
-            {/* <p>
-                <b>Модель: </b> {laptop.model}
-            </p>
-            <p>
-                <b>Размер дисплея: </b> {laptop.resolution}
-            </p>
-            <p>
-                <b>Процессор: </b> {laptop.cpu}
-            </p>
-            <p>
-                <b>Объем ОЗУ: </b> {laptop.ram}
-            </p>
-            <p>
-                <b>Внутренняя память: </b> {laptop.memory}
-            </p>
-            <p>
-                <b>Графическое ядро: </b> {laptop.gpu}
-            </p>
-            <p>
-                <b>Вес: </b> {laptop.weight}
-            </p> */}
 
             <div className="w-1/3">
                 <div className="w-full aspect-square relative">
