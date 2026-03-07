@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {Transition, TransitionStatus} from "react-transition-group";
 import Link from "next/link";
 import { Laptop } from "../../types";
@@ -75,16 +75,16 @@ export function ChooseMenu({
     const vendors = Object.keys(brandsWithLines);
 
     const [currentVendor, setCurrentVendor] = useState<Laptop["brand"] | null>(
-        null
+        selectedState.vendor ?? null
     );
-    const [currentLine, setCurrentLine] = useState<Laptop["line"] | null>(null);
-    const [currentGeneration, setCurrentGeneration] = useState<Laptop["generation"] | null>(null);
+    const [currentLine, setCurrentLine] = useState<Laptop["line"] | null>(selectedState.line ?? null);
+    const [currentGeneration, setCurrentGeneration] = useState<Laptop["generation"] | null>(selectedState.generation ?? null);
 
     const lineRef = useRef<HTMLDivElement | null>(null);
     const modelRef = useRef<HTMLDivElement | null>(null);
 
-    const [isLineOpen, setIsLineOpen] = useState(false);
-    const [isModelOpen, setIsModelOpen] = useState(false);
+    const [isLineOpen, setIsLineOpen] = useState(!!selectedState);
+    const [isModelOpen, setIsModelOpen] = useState(!!selectedState.generation);
 
     useEffect(()=>{
         console.log("render change")

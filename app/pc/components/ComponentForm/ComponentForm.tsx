@@ -1,9 +1,9 @@
 'use client'
 
 import { Reducer, useEffect, useReducer, useRef} from "react";
-import ComponentSelect from "../../ui/ComponentSelect";
+import ComponentSelect from "../../ui/ComponentSelect/ComponentSelect";
 import { Laptop } from "@/app/types";
-import { buildArrays, createArr, filterLaptops, getFormStateFromLaptop} from "./helpers";
+import { buildArrays, convertArraysToGroups, createArr, filterLaptops, getFormStateFromLaptop} from "./helpers";
 import { ArraysReducerState, ArraysReducerUpdateStateAction, reducerActions, reducerState } from "./types";
 import { useLaptop } from "@/app/hooks/useMessage";
 import BlockStyle from "@/app/ui/BlockStyle";
@@ -46,10 +46,10 @@ const arraysReducer: Reducer<
 export default function ComponentForm({laptops} : {laptops: Laptop[]}){
     const formRef = useRef<HTMLFormElement>(null)
     const [arraysState, arraysDispatch] = useReducer(arraysReducer, {
-        cpu: createArr("cpu", laptops),
-        gpu: createArr("gpu", laptops),
-        ram: createArr("ram", laptops),
-        resolution: createArr("resolution", laptops)
+        cpu: convertArraysToGroups({ filtered: createArr("cpu", laptops), excluded: []}),
+        gpu: convertArraysToGroups({ filtered: createArr("gpu", laptops), excluded: []}),
+        ram: convertArraysToGroups({ filtered: createArr("ram", laptops), excluded: []}),
+        resolution:  convertArraysToGroups({ filtered: createArr("resolution", laptops), excluded: []})
     });
 
     const [formState, formDispatch] = useReducer(reducer, reducerInitialState);
@@ -58,9 +58,10 @@ export default function ComponentForm({laptops} : {laptops: Laptop[]}){
 
     useEffect(()=>{
         let [filteredLaptops, excludedLaptops] = filterLaptops(formState, laptops);
+        console.log("filt: " + filteredLaptops, "excl:" + excludedLaptops)
         if(filteredLaptops.length === 1){
             setLaptop(filteredLaptops[0]);
-            
+            console.log("one laptop")
         } else {
             if(laptop) clearLaptop()
         }
@@ -107,11 +108,12 @@ export default function ComponentForm({laptops} : {laptops: Laptop[]}){
                     selectedOption={formState.cpu}
                     labelOption="Процессор"
                     options={arraysState.cpu}
-                    onChange={(e) => {
+                    onChange={(newValue) => {
+                        console.log(newValue)
                         formDispatch({
                             type: "update_field",
                             name: "cpu",
-                            value: e.target.value,
+                            value: newValue as string,
                         });
                     }}
                 />
@@ -121,11 +123,11 @@ export default function ComponentForm({laptops} : {laptops: Laptop[]}){
                     selectedOption={formState.gpu}
                     labelOption="Видеокарта"
                     options={arraysState.gpu}
-                    onChange={(e) => {
+                    onChange={(newValue) => {
                         formDispatch({
                             type: "update_field",
                             name: "gpu",
-                            value: e.target.value,
+                            value: newValue as string,
                         });
                     }}
                 />
@@ -135,11 +137,11 @@ export default function ComponentForm({laptops} : {laptops: Laptop[]}){
                     selectedOption={formState.ram}
                     labelOption="ОЗУ"
                     options={arraysState.ram}
-                    onChange={(e) => {
+                    onChange={(newValue) => {
                         formDispatch({
                             type: "update_field",
                             name: "ram",
-                            value: e.target.value,
+                            value: newValue as string,
                         });
                     }}
                 />
@@ -150,11 +152,11 @@ export default function ComponentForm({laptops} : {laptops: Laptop[]}){
                     selectedOption={formState.resolution}
                     labelOption="Разрешение экрана"
                     options={arraysState.resolution}
-                    onChange={(e) => {
+                    onChange={(newValue) => {
                         formDispatch({
                             type: "update_field",
                             name: "resolution",
-                            value: e.target.value,
+                            value: newValue as string,
                         });
                     }}
                 />

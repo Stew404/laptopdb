@@ -1,5 +1,7 @@
 import { Laptop } from "@/app/types";
-import { ArraysReducerState, reducerState } from "./types";
+import { ArraysReducerState, filteredAndExcludedArrays, reducerState } from "./types";
+import { GroupBase } from "react-select";
+import { SelectOption } from "../../ui/ComponentSelect/types";
 
 export const getGpu = (laptop: Laptop) => {
     if (typeof laptop.gpu === "string") {
@@ -12,7 +14,7 @@ export const getGpu = (laptop: Laptop) => {
 };
 
 export const getRam = (laptop: Laptop) => {
-    return laptop.ram.toString();
+    return laptop.ram.toString() + " ГБ";
 };
 
 export const getCpu = (laptop: Laptop) =>{
@@ -101,23 +103,42 @@ export const buildArrays = (
     excludedLaptops: Laptop[]
 ) => {
     let arrays: ArraysReducerState = {
-        cpu: [],
-        gpu: [],
-        ram: [],
-        resolution: []
-    }
+        cpu: {} as GroupBase<SelectOption>[],
+        gpu: {} as GroupBase<SelectOption>[],
+        ram: {} as GroupBase<SelectOption>[],
+        resolution: {} as GroupBase<SelectOption>[],
+    };
 
     const fields = Object.keys(formState) as (keyof reducerState)[];
 
     fields.forEach((key)=>{
-        arrays[key] = [
-            ...new Set([
-                ...createArr(key, filteredLaptops),
-                "_",
-                ...createArr(key, excludedLaptops),
-            ]),
-        ];
+        let filtered = createArr(key, filteredLaptops)
+        let excluded = createArr(key, excludedLaptops).filter(value => !filtered.includes(value));
+        
+
+        arrays[key] = convertArraysToGroups({
+            filtered: filtered,
+            excluded: excluded,
+        });
     });
 
     return arrays;
+};
+
+export const convertArraysToGroups = (arrays: filteredAndExcludedArrays) => {
+    return [
+        {
+            options: [
+                ...arrays.filtered.map((option) => {
+                    return { value: option, label: option };
+                })
+            ],
+        },
+        {
+            label: "Несовместимы с текущей конфигурацией",
+            options: arrays.excluded.map((option) => {
+                return { value: option, label: option };
+            }),
+        },
+    ] as GroupBase<SelectOption>[];
 };
