@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {Transition, TransitionStatus} from "react-transition-group";
 import Link from "next/link";
 import { Laptop } from "../../types";
+import { useSidebarTab } from "@/app/hooks/useSidebarTab";
 
 const TRANSTITON_DURATION = 50;
 
@@ -74,6 +75,8 @@ export function ChooseMenu({
 }) {
     const vendors = Object.keys(brandsWithLines);
 
+    const {sidebarTab} = useSidebarTab()
+
     const [currentVendor, setCurrentVendor] = useState<Laptop["brand"] | null>(
         selectedState.vendor ?? null
     );
@@ -87,7 +90,6 @@ export function ChooseMenu({
     const [isModelOpen, setIsModelOpen] = useState(!!selectedState.generation);
 
     useEffect(()=>{
-        console.log("render change")
         if(selectedState.vendor){
             setCurrentVendor(selectedState.vendor)
             setCurrentLine(selectedState.line)
@@ -133,12 +135,13 @@ export function ChooseMenu({
         }
         setCurrentGeneration(null);
     };
+
     const generationClickHandler = (generation: Laptop["generation"]) => {
         setCurrentGeneration(() => generation)
     };
 
     return (
-        <div className="relative w-full">
+        <div className={`relative w-full h-full ${sidebarTab !== "choose-menu" ? "opacity-0 hidden" : ""}`}>
             <div
                 className={
                     blockStyle +

@@ -1,4 +1,6 @@
+@layer base;
 @import "tailwindcss";
+
 
 :root {
   --background: #accbd9;
@@ -42,7 +44,6 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
   position: relative;
-  padding: 0;
 }
 
 body {
@@ -201,5 +202,7 @@ body::-webkit-scrollbar-thumb {
   }
 
   
-
+  .info-size {
+    font-size: 2rem;
+  }
 }

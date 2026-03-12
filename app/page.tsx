@@ -1,5 +1,4 @@
 import News from "./modules/News";
-import Header from "./modules/Header";
 
 export default async function Home({}) {
     return (

@@ -13,8 +13,7 @@ const Select = dynamic<Props<SelectOption, false, GroupBase<SelectOption>>>(() =
 const ComponentSelect : FC<ComponentSelectProps> =  ({name, id, labelOption, selectedOption, options, onChange}) => {
 
     const changeHandler = (
-        value: SingleValue<SelectOption>,
-        action: ActionMeta<{ value: string; label: string }>
+        value: SingleValue<SelectOption>
     ) => {
         if (value && onChange) {
             onChange(value.value);
@@ -30,61 +29,30 @@ const ComponentSelect : FC<ComponentSelectProps> =  ({name, id, labelOption, sel
     };
 
     return (
-        <>
-            <Select
-                styles={selectStyles}
-                options={options}
-                placeholder={
-                    selectedOption === "" ? labelOption : selectedOption
+        <Select
+            styles={selectStyles}
+            options={options}
+            placeholder={
+                selectedOption === "" ? labelOption : selectedOption
+            }
+            onChange={changeHandler}
+            formatGroupLabel={formatGroupLabel}
+            noOptionsMessage={()=>{
+                return <p>Не найдено</p>
+            }}
+            isOptionDisabled={(option, selectValue) => {
+                console.log("option")
+                console.log(option)
+                console.log("selectValue")
+                console.log(selectValue)
+                if (typeof option.value === "string") {
+                    console.log("options")
+                    console.log(options)
+                    return options[1].options.map((option) => option.value).includes(option.value);
                 }
-                onChange={changeHandler}
-                formatGroupLabel={formatGroupLabel}
-                noOptionsMessage={()=>{
-                    return <p>Не найдено</p>
-                }}
-                isOptionDisabled={(option, selectValue) => {
-                    console.log("option")
-                    console.log(option)
-                    console.log("selectValue")
-                    console.log(selectValue)
-                    if (typeof option.value === "string") {
-                        console.log("options")
-                        console.log(options)
-                        return options[1].options.map((option) => option.value).includes(option.value);
-                    }
-                    return false;
-                }}
-            />
-            {/* <select
-                ref={ref}
-                className="button h-[5rem] rounded-[50px]  text-center text-[1.8rem]"
-                name={name}
-                id={id}
-                onChange={onChange}
-                value={selectedOption}
-            >
-                <option value="">{labelOption}</option>
-                {options.map((option) => {
-                    if (option === "_") {
-                        isExcluded = true;
-                        return;
-                    }
-
-                    return (
-                        <option
-                            key={option}
-                            value={option}
-                            disabled={isExcluded}
-                            className="h-[100px]"
-
-                            title={isExcluded ? "Недоступно в данной конфигурации" : ""}
-                        >
-                            {option}
-                        </option>
-                    );
-                })}
-            </select> */}
-        </>
+                return false;
+            }}
+        />
     );
 }
 

@@ -5,8 +5,9 @@ import ComponentSelect from "../../ui/ComponentSelect/ComponentSelect";
 import { Laptop } from "@/app/types";
 import { buildArrays, convertArraysToGroups, createArr, filterLaptops, getFormStateFromLaptop} from "./helpers";
 import { ArraysReducerState, ArraysReducerUpdateStateAction, reducerActions, reducerState } from "./types";
-import { useLaptop } from "@/app/hooks/useMessage";
+import { useLaptop } from "@/app/hooks/useLaptop";
 import BlockStyle from "@/app/ui/BlockStyle";
+import { useSidebarTab } from "@/app/hooks/useSidebarTab";
 
 const reducer: Reducer<reducerState, reducerActions> = (state, action) => {
     if (action.type === "update_field") {
@@ -55,13 +56,13 @@ export default function ComponentForm({laptops} : {laptops: Laptop[]}){
     const [formState, formDispatch] = useReducer(reducer, reducerInitialState);
 
     const {laptop, setLaptop, clearLaptop} = useLaptop()
+    const {setSidebarTab} = useSidebarTab()
 
     useEffect(()=>{
         let [filteredLaptops, excludedLaptops] = filterLaptops(formState, laptops);
-        console.log("filt: " + filteredLaptops, "excl:" + excludedLaptops)
         if(filteredLaptops.length === 1){
             setLaptop(filteredLaptops[0]);
-            console.log("one laptop")
+            setSidebarTab("laptop-info");
         } else {
             if(laptop) clearLaptop()
         }

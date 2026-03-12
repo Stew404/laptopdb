@@ -1,21 +1,25 @@
 import Link from "next/link";
-import { PropsWithChildren } from "react";
+import { MouseEventHandler, PropsWithChildren } from "react";
 
 const HEADER_BUTTON_STYLE = "button header-button";
 
-export function CircleButton({href = "", className = "", children}: PropsWithChildren<{href? : string, className?: string}>){
+type ButtonProps = PropsWithChildren<{href? : string, className?: string, onClick?: MouseEventHandler | undefined }>
+
+export function CircleButton({href = "", className = "", onClick = undefined, children}: ButtonProps){
 
     let style = HEADER_BUTTON_STYLE + " " + className
 
     if(href){
         return (
-            <Link className={style} href={href}>
+            <Link className={style} href={href} onClick={onClick}>
                 {children}
             </Link>
         );
     }
 
-    return <button className={style}>
-        {children}
-    </button>; 
+    return (
+        <button className={style} onClick={onClick}>
+            {children}
+        </button>
+    ); 
 }

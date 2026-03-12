@@ -4,6 +4,7 @@ import { getVendorsWithLines } from "../../db/vendors";
 import { ChooseMenu } from "../components/ChooseMenu";
 import { SidebarHeader } from "../components/SidebarHeader";
 import BlockStyle from "@/app/ui/BlockStyle";
+import SidebarLaptopInfo from "../components/SidebarLaptopInfo";
 
 
 
@@ -36,18 +37,17 @@ export default async function Sidebar({params}: {params: SearchParams}) {
         menuState.generation = generation
     }
 
-    console.log(menuState);
-
-        return (
-            <BlockStyle style="blue">
-                <aside className="min-w-1/5 w-1/5 p-[1rem] h-full text-xl rounded-[50px] rounded-bl-[10px]">
-                    <SidebarHeader />
-                    <ChooseMenu
-                        brandsWithLines={brandsWithLines}
-                        linesWithGenerations={linesWithGenerations}
-                        selectedState={{ ...menuState }}
-                    />
-                </aside>
-            </BlockStyle>
-        );
+    return (
+        <BlockStyle style="blue">
+            <aside className="min-w-1/5 w-1/5 p-[1rem] h-full flex flex-col text-xl rounded-[50px] rounded-bl-[10px]">
+                <SidebarHeader />
+                <ChooseMenu
+                    brandsWithLines={brandsWithLines}
+                    linesWithGenerations={linesWithGenerations}
+                    selectedState={{ ...menuState }}
+                />
+                <SidebarLaptopInfo/>
+            </aside>
+        </BlockStyle>
+    );
 }

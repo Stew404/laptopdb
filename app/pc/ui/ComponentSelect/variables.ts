@@ -1,4 +1,4 @@
-import { CSSObjectWithLabel, GroupBase, OptionProps, StylesConfig } from "react-select";
+import { GroupBase, StylesConfig } from "react-select";
 import { SelectOption } from "./types";
 
 export const selectStyles: StylesConfig<
