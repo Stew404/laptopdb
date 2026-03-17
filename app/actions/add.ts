@@ -1,20 +1,16 @@
 import sql from "../db/db"
+import { LaptopFormAddSchema } from "../lib/schemas"
 import { GenericSingleRow, Laptop } from "../types"
 import uploadFile from "./uploadFile"
 
 export default async function add(formData: FormData){
     "use server"
-    const formDataEntries = [...formData.entries()].filter((elem) => {
-        return elem[1] !== ""
-    })
-    const {laptop_image, ...otherData} = Object.fromEntries(formDataEntries)
-
-    if (typeof laptop_image === "string") {
-        return new Error("Invalid image type");
-    }
+    const formDataEntries = [...formData.entries()]
+    const { laptop_image, ...otherData } = LaptopFormAddSchema.parse(
+        Object.fromEntries(formDataEntries)
+    );
 
     let id;
-    otherData["is_touchscreen"] = otherData["is_touchscreen"] === 'true' ? "true" : "false"
     try {
         id = await sql<GenericSingleRow<Laptop["id"], "id">[]>`
             INSERT INTO LAPTOPS ${
@@ -23,17 +19,18 @@ export default async function add(formData: FormData){
         }
         RETURNING id
         `
+        id = id[0].id
     } catch (error) {
         console.log(error)
-        return {message: "Произошла ошибка"}
+        return {message: "Ошибка добавления в базу данных"}
     }
 
-    id = id[0].id
 
     const path = await uploadFile(`/laptops/laptop-${id}.${laptop_image.type.split("/")[1]}`, laptop_image)
     
     if(typeof path !== "string"){
-        return new Error("Invalid image path")
+        console.error("Invalid image path")
+        return { message: "Ошибка загрузки изображения" };
     }
 
     try {

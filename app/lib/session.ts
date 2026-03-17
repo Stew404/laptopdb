@@ -1,5 +1,5 @@
 import { JWTPayload, jwtVerify, SignJWT } from "jose"
-import { cookies } from "next/headers"
+import { cookies, headers } from "next/headers"
 
 
 type UserRole = "admin" | "user"
@@ -23,14 +23,17 @@ export async function encrypt(payload: SessionPayload) {
 }
 
 export async function decrypt(session: string = "") {
+    if(!session){
+        return {}
+    }
+
     try {
         const {payload} = await jwtVerify(session, encodedSecret, {
             algorithms: ["HS256"]
         })
         return payload
     } catch (error) {
-        console.log(error)
-        console.log("Session verification error")
+        console.log(`Session verification error`)
     }
 }
 

@@ -19,13 +19,15 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
     const [uploadedFileName, setUploadedFileName] = useState("")
     
     const formAction = async (formData: FormData)=>{
+        console.log(formData.get("laptop_image"))
+
         const {message} = await action(formData)
 
         setMessage(message);
         redirect("/admin")
     }
 
-    const imageInputHandler = async(e: ChangeEvent<HTMLInputElement>)=>{
+    const imageInputHandler = (e: ChangeEvent<HTMLInputElement>)=>{
         if(e.target.files){
             setUploadedFileName(e.target.files[0].name);
         }
@@ -203,7 +205,7 @@ export default function LaptopForm({action, data = null}: {action: (formdata: Fo
                             <input
                                 type="number"
                                 name="matrix_frequency"
-                                defaultValue={data?.matrixFrequency}
+                                defaultValue={data?.matrixFrequency ? data?.matrixFrequency : ""}
                                 required
                             />
                         </div>

@@ -11,5 +11,6 @@ export default async function uploadFile(path: PathLike, file: File){
     } catch (error) {
         console.log("Upload file failed")
         console.log(error)
+        return
     }
 } 
