@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
           pathname:"/**"
         }],
     },
+    transpilePackages: ["three"]
 };
 
 export default nextConfig;
