@@ -3,6 +3,7 @@ import { useSpring } from "@react-spring/three";
 import { useFrame, useLoader } from "@react-three/fiber";
 import {useRef} from "react";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
+import { DisassemblyOverlay } from "./DisassemblyOverlay";
 
 const LAPTOP_ANGLE = 120
 const LAPTOP_DISPLAY_NODE = "LaptopCover"
@@ -12,16 +13,17 @@ const COMPONENTS_NODE_NAME = "Down_A"
 export default function Model(){
 
     const {scene, nodes} = useLoader(GLTFLoader, "/MSI_titan_gt76.glb");
-    const {isLaptopOpen, isBottomCoverHidden, isTopComponentsHidden} = useModelController()
-    console.log(nodes)
+    const {isLaptopOpen, isBottomCoverHidden, isTopComponentsHidden, mode, disassemblyMenuStage} = useModelController()
 
     const bottomCoverRef = useRef(nodes[COVER_NODE_NAME].position.z);
     const topComponentsRef = useRef(nodes[COMPONENTS_NODE_NAME].position.z);
 
+    console.log(nodes.Down_C)
+
     const props = useSpring({
         coverRotation: isLaptopOpen
-            ? Math.PI + ((Math.PI / 180) * LAPTOP_ANGLE)
-            : Math.PI,
+            ? (Math.PI / 180) * LAPTOP_ANGLE
+            : 0,
         bottomCoverScale: isBottomCoverHidden ? 0.0001 : 1,
         bottomCoverPosition: isBottomCoverHidden
             ? bottomCoverRef.current - 5
@@ -52,5 +54,10 @@ export default function Model(){
         }
     });
 
-  return <primitive object={scene} />;
+  return (
+      <>
+          <primitive object={scene} />
+          {mode === "disassembly" && <DisassemblyOverlay/>}
+      </>
+  );
 }

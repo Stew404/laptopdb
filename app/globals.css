@@ -206,3 +206,13 @@ body::-webkit-scrollbar-thumb {
     font-size: 2rem;
   }
 }
+
+@keyframes pulse {
+  from {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  to {
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+}
