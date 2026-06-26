@@ -3,15 +3,17 @@ import {create} from "zustand";
 interface ModelControllerState {
     isLaptopOpen: boolean;
     isBottomCoverHidden: boolean;
-    isTopComponentsHidden: boolean;
+    isCoolingHidden: boolean;
     mode: "free" | "disassembly"
     changeIsLaptopOpen: () => void;
     changeisBottomCoverHidden: () => void;
-    changeisTopComponentsHidden: () => void;
+    changeisCoolingHidden: () => void;
     changeMode: ()=> void,
     disassemblyMenuStage: number;
     setNextStage: ()=>void;
     setPrevStage: ()=>void;
+    modelPath: string;
+    setModelPath: (newPath:string) => void
 }
 
 export const useModelController = create<ModelControllerState>((set) => ({
@@ -24,11 +26,11 @@ export const useModelController = create<ModelControllerState>((set) => ({
             ...state,
             isBottomCoverHidden: !state.isBottomCoverHidden,
         })),
-    isTopComponentsHidden: false,
-    changeisTopComponentsHidden: () =>
+    isCoolingHidden: false,
+    changeisCoolingHidden: () =>
         set((state) => ({
             ...state,
-            isTopComponentsHidden: !state.isTopComponentsHidden,
+            isCoolingHidden: !state.isCoolingHidden,
         })),
     mode: "free",
     changeMode: () =>
@@ -47,4 +49,10 @@ export const useModelController = create<ModelControllerState>((set) => ({
             ...state,
             disassemblyMenuStage: state.disassemblyMenuStage - 1,
         })),
+    modelPath: "",
+    setModelPath: (newPath)=>
+        set((state)=>({
+            ...state,
+            modelPath: newPath
+        }))
 }));

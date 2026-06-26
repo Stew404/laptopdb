@@ -1,5 +1,4 @@
 import { useModelController } from "@/app/hooks/useModelController";
-import { useEffect, useState } from "react";
 
 const SLIDES = [
     {
@@ -16,9 +15,9 @@ const SLIDES = [
 export default function DisassemblyMenu(){
     const {
         isBottomCoverHidden,
-        isTopComponentsHidden,
+        isCoolingHidden,
         changeisBottomCoverHidden,
-        changeisTopComponentsHidden,
+        changeisCoolingHidden,
     } = useModelController();
 
     const {disassemblyMenuStage, setNextStage, setPrevStage} = useModelController()
@@ -42,12 +41,12 @@ export default function DisassemblyMenu(){
                 <button
                     className="button w-full"
                     onClick={() => {
-                        changeisTopComponentsHidden();
-                        if(isTopComponentsHidden) setPrevStage()
+                        changeisCoolingHidden();
+                        if(isCoolingHidden) setPrevStage()
                         else setNextStage()
                     }}
                 >
-                    {isTopComponentsHidden ? "Вернуть" : "Убрать"} охлаждение
+                    {isCoolingHidden ? "Вернуть" : "Убрать"} охлаждение
                 </button>
             )}
         </div>
