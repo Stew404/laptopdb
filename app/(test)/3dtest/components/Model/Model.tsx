@@ -5,15 +5,15 @@ import {useEffect, useRef} from "react";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { DisassemblyOverlay } from "../DisassemblyOverlay";
 import { getScrewsCoords } from "./helpers";
-import { Resize, useAspect } from "@react-three/drei";
 
+type Path = "/t14.glb" | "/MSI_titan_gt76.glb";
 // const BASE_MODEL_PATH = "/MSI_titan_gt76.glb"
 const BASE_MODEL_PATH = "/t14.glb";
 const LAPTOP_ANGLE = 90
-const SCREEN_NODE_NAME = BASE_MODEL_PATH == "/MSI_titan_gt76.glb" ? "LaptopCover" : "Screen"
+const SCREEN_NODE_NAME = BASE_MODEL_PATH != "/t14.glb" ? "LaptopCover" : "Screen"
 const COVER_NODE_NAME =
-    BASE_MODEL_PATH == "/MSI_titan_gt76.glb" ? "Down_B" : "Cover";
-const COOLING_NODE_NAME = BASE_MODEL_PATH == "/MSI_titan_gt76.glb" ? "Down_C" : "Cooling"
+    BASE_MODEL_PATH != "/t14.glb" ? "Down_B" : "Cover";
+const COOLING_NODE_NAME = BASE_MODEL_PATH != "/t14.glb" ? "Down_C" : "Cooling"
 const SCREW_COOLING_NODE_NAME = "ScrewCooling"
 const SCREW_COVER_NODE_NAME = "ScrewCover"
 // const SCREEN_NODE_NAME = "LaptopCover"

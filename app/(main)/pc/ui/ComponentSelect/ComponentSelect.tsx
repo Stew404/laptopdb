@@ -1,8 +1,7 @@
 'use client'
-import {FC, ReactNode, useEffect, useState} from "react"
+import {FC, ReactNode} from "react"
 import dynamic from "next/dynamic";
-import { ActionMeta, GroupBase, Props, SingleValue } from "react-select";
-import { filteredAndExcludedArrays } from "../../components/ComponentForm/types";
+import {  GroupBase, Props, SingleValue } from "react-select";
 import { ComponentSelectProps, SelectOption } from "./types";
 import { selectStyles } from "./variables";
 

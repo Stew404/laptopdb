@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "@/app/globals.css";
 
 import {Lato} from "next/font/google"
-import Header from "../modules/Header";
+import Header from "@/app/modules/Header";
 
 export const metadata: Metadata = {
   title: "Laptop DB",

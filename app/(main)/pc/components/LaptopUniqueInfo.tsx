@@ -1,7 +1,4 @@
-
-import Image from "next/image";
 import { FC } from "react";
-import { Laptop } from "../../types";
 import { useLaptop } from "@/app/hooks/useLaptop";
 import Field from "../ui/Field";
 

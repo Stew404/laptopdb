@@ -1,5 +1,5 @@
 'use client'
-import { Laptop } from "../../types";
+import { Laptop } from "@/app/types";
 import ComponentForm from "../components/ComponentForm/ComponentForm";
 import LaptopInfo from "../components/LaptopInfo";
 import BlockStyle from "@/app/ui/BlockStyle";

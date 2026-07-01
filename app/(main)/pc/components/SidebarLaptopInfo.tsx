@@ -1,7 +1,7 @@
 'use client'
 
 import Image from "next/image";
-import BlockStyle from "../../ui/BlockStyle";
+import BlockStyle from "@/app/ui/BlockStyle";
 import { useLaptop } from "@/app/hooks/useLaptop";
 import Field from "../ui/Field";
 import { useBaseLaptop } from "@/app/hooks/useBaseLaptop";

@@ -3,7 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {Transition, TransitionStatus} from "react-transition-group";
 import Link from "next/link";
-import { Laptop } from "../../types";
+import { Laptop } from "@/app/types";
 import { useSidebarTab } from "@/app/hooks/useSidebarTab";
 
 const TRANSTITON_DURATION = 50;

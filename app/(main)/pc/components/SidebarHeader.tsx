@@ -1,7 +1,7 @@
 'use client'
 
-import { CircleButton } from "../../ui/CircleButton";
-import BlockStyle from "../../ui/BlockStyle";
+import { CircleButton } from "@/app/ui/CircleButton";
+import BlockStyle from "@/app/ui/BlockStyle";
 import { useSidebarTab } from "@/app/hooks/useSidebarTab";
 export function SidebarHeader (){
 

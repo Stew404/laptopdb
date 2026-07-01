@@ -1,6 +1,6 @@
 import { SearchParams } from "next/dist/server/request/search-params";
-import { getLinesWithGenerations } from "../../db/lines";
-import { getVendorsWithLines } from "../../db/vendors";
+import { getLinesWithGenerations } from "@/app/db/lines";
+import { getVendorsWithLines } from "@/app/db/vendors";
 import { ChooseMenu } from "../components/ChooseMenu";
 import { SidebarHeader } from "../components/SidebarHeader";
 import BlockStyle from "@/app/ui/BlockStyle";

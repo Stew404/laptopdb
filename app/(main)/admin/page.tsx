@@ -2,12 +2,12 @@ import { SearchParams } from "next/dist/server/request/search-params";
 import ElementList from "./components/ElementList";
 import LaptopForm from "./components/LaptopForm";
 import StatusMessage from "./components/StatusMessage";
-import add from "../actions/add";
-import update from "../actions/update";
-import { getLaptopByID, getLaptopsCount } from "../db/laptops";
+import add from "@/app/actions/add";
+import update from "@/app/actions/update";
+import { getLaptopByID, getLaptopsCount } from "@/app/db/laptops";
 import AdminSearchInput from "./components/AdminSearchInput";
 import Pagination from "./components/Pagination";
-import { verifySession } from "../lib/dal";
+import { verifySession } from "@/app/lib/dal";
 import { redirect } from "next/navigation";
 
 export default async function AdminPanel({

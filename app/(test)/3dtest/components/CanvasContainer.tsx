@@ -78,6 +78,7 @@ export default function CanvasContainer(){
                         }
                         distance={dragIsEnabled ? 0.67 : 0.37}
                         enabled={dragIsEnabled}
+
                     />
                     <axesHelper scale={10} />
                 </Suspense>

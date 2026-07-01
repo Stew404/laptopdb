@@ -1,8 +1,8 @@
 import Sidebar from "./modules/Sidebar";
 import Main from "./modules/Main";
-import { getLaptopsByFullName } from "../db/laptops";
+import { getLaptopsByFullName } from "@/app/db/laptops";
 import { SearchParams } from "next/dist/server/request/search-params";
-import { Laptop } from "../types";
+import { Laptop } from "@/app/types";
 
 export default async function PC({searchParams}: {searchParams: Promise<SearchParams>}){
 
