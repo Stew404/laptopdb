@@ -69,8 +69,5 @@ export default async function AdminPanel({
                     />
                 </>
             );
-            break;
     }
-
-    return;
 }

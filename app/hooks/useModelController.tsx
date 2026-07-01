@@ -1,4 +1,12 @@
+import { Object3D, Object3DEventMap } from "three";
 import {create} from "zustand";
+
+type ScrewCoords = { x: number; y: number; z:number, node: Object3D<Object3DEventMap> };
+
+type ScrewsCoolingCoords = ScrewCoords[]
+type ScrewsScreenCoords = ScrewCoords[]
+
+export type ScrewsCoords = [ScrewsCoolingCoords, ScrewsScreenCoords]
 
 interface ModelControllerState {
     isLaptopOpen: boolean;
@@ -13,7 +21,9 @@ interface ModelControllerState {
     setNextStage: ()=>void;
     setPrevStage: ()=>void;
     modelPath: string;
-    setModelPath: (newPath:string) => void
+    setModelPath: (newPath:string) => void;
+    setScrewsCoords: (newCoords: ScrewsCoords) => void;
+    screwsCoords: ScrewsCoords
 }
 
 export const useModelController = create<ModelControllerState>((set) => ({
@@ -54,5 +64,11 @@ export const useModelController = create<ModelControllerState>((set) => ({
         set((state)=>({
             ...state,
             modelPath: newPath
-        }))
+        })),
+    screwsCoords: [[],[]],
+    setScrewsCoords: (newCoords)=>
+    set((state)=> ({
+        ...state,
+        screwsCoords: newCoords
+    }))
 }));

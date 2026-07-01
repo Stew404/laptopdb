@@ -3,21 +3,48 @@ import { useSpring } from "@react-spring/three";
 import { useFrame, useLoader } from "@react-three/fiber";
 import {useEffect, useRef} from "react";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
-import { DisassemblyOverlay } from "./DisassemblyOverlay";
+import { DisassemblyOverlay } from "../DisassemblyOverlay";
+import { getScrewsCoords } from "./helpers";
+import { Resize, useAspect } from "@react-three/drei";
 
+// const BASE_MODEL_PATH = "/MSI_titan_gt76.glb"
+const BASE_MODEL_PATH = "/t14.glb";
 const LAPTOP_ANGLE = 90
-const SCREEN_NODE_NAME = "Screen"
-const COVER_NODE_NAME = "Cover"
-const COOLING_NODE_NAME = "Cooling"
+const SCREEN_NODE_NAME = BASE_MODEL_PATH == "/MSI_titan_gt76.glb" ? "LaptopCover" : "Screen"
+const COVER_NODE_NAME =
+    BASE_MODEL_PATH == "/MSI_titan_gt76.glb" ? "Down_B" : "Cover";
+const COOLING_NODE_NAME = BASE_MODEL_PATH == "/MSI_titan_gt76.glb" ? "Down_C" : "Cooling"
+const SCREW_COOLING_NODE_NAME = "ScrewCooling"
+const SCREW_COVER_NODE_NAME = "ScrewCover"
 // const SCREEN_NODE_NAME = "LaptopCover"
 // const COVER_NODE_NAME = "Down_B"
 // const COOLING_NODE_NAME = "Down_C"
 export default function Model(){
 
     // const {scene, nodes} = useLoader(GLTFLoader, "/MSI_titan_gt76.glb");
-    const {isLaptopOpen, isBottomCoverHidden, isCoolingHidden, mode, modelPath} = useModelController()
-    const path = modelPath ? modelPath : "/lenovo_thinkbook_with_rigfixed123.glb";
+    const {isLaptopOpen, isBottomCoverHidden, isCoolingHidden, mode, modelPath, setScrewsCoords} = useModelController()
+    const path = modelPath ? modelPath : BASE_MODEL_PATH;
+    // const path = modelPath ? modelPath : "/t14.glb";
     const { scene, nodes } = useLoader(GLTFLoader, path);
+    const gltf = useLoader(GLTFLoader, path);
+    console.log(gltf);
+    // useEffect(()=>{
+    //     if(mode == "free"){
+    //         scene.scale.set(7.6, 7.6, 7.6);
+    //     } else {
+    //         scene.scale.set(12.8, 12.8, 12.8);
+    //     }
+    // }, [mode])
+    useEffect(()=>{
+        scene.scale.set(1, 1, 1);
+        setScrewsCoords(
+            getScrewsCoords(
+                nodes,
+                SCREW_COOLING_NODE_NAME,
+                SCREW_COVER_NODE_NAME
+            )
+        );
+    },[scene])
 
     const coverNode = nodes[COVER_NODE_NAME];
     const coolingNode = nodes[COOLING_NODE_NAME];

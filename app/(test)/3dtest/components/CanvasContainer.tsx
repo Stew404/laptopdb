@@ -1,6 +1,6 @@
 'use client'
 import { Canvas } from "@react-three/fiber"
-import Model from "./Model";
+import Model from "./Model/Model";
 import { CameraControls, Center, Environment, Html} from "@react-three/drei";
 import {Vector3} from "three";
 import { useModelController } from "@/app/hooks/useModelController";
@@ -67,15 +67,8 @@ export default function CanvasContainer(){
                 >
                     <ambientLight intensity={1} />
                     <Environment preset="dawn" />
-
                     {/* Scale приближает относительно текущего, надо как нибудь менять базовый */}
-                    <Center
-                        scale={
-                            dragIsEnabled
-                                ? new Vector3(2.5, 2.5, 2.5)
-                                : new Vector3(4, 4, 4)
-                        }
-                    >
+                    <Center>
                         <Model />
                     </Center>
                     <CameraControls
@@ -83,6 +76,7 @@ export default function CanvasContainer(){
                         azimuthAngle={
                             dragIsEnabled ? (3 * Math.PI) / 4 : 2 * Math.PI
                         }
+                        distance={dragIsEnabled ? 0.67 : 0.37}
                         enabled={dragIsEnabled}
                     />
                     <axesHelper scale={10} />

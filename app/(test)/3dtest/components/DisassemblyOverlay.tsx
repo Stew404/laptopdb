@@ -1,7 +1,7 @@
 import { useModelController } from "@/app/hooks/useModelController";
 import { Html } from "@react-three/drei";
 
-type Coords = {x: number, y: number}
+type Coords = { x: number; y: number };
 type CoordsStage = Coords[]
 
 const TEST_COORDS_STAGES: CoordsStage[] = [
@@ -48,15 +48,21 @@ const pointerStyle = {
 
 export function DisassemblyOverlay(){
 
-    const {disassemblyMenuStage} = useModelController()
+    const {disassemblyMenuStage, screwsCoords} = useModelController()
 
     return (
         <>
-            {TEST_COORDS_STAGES[disassemblyMenuStage].map(({ x, y }) => (
-                <Html key={x + y} position={[x, y, 0]}>
-                    <div style={pointerStyle}></div>
+            {screwsCoords[disassemblyMenuStage]?.map(({ x, y, z, node }) => {
+                console.log(x, y)
+                node.position.z = z
+                return <Html key={x + y} position={[x, y, 0]}>
+                    <div onClick={function(e){
+                        node.position.z = 100
+                        e.currentTarget.remove()
+
+                    }} style={pointerStyle}></div>
                 </Html>
-            ))}
+            })}
         </>
     );
 }
